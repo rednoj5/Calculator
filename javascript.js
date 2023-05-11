@@ -49,9 +49,11 @@ function sqrt() {
     let second = Number.parseFloat(secondNumber); 
     if (display.textContent == first) {
         firstNumber = Math.sqrt(first);
+        firstNumber = checkIfTooLong(firstNumber);
         display.textContent = firstNumber;
     } else if (display.textContent == second) {
         secondNumber = Math.sqrt(second);
+        secondNumber = checkIfTooLong(secondNumber);
         display.textContent = secondNumber;
     };
 };
@@ -75,11 +77,15 @@ function clear() {
     operator = '';
 };
 
-function checkIfTooLong(number) {
-    if (number.toString().length > 15) {
-        return true;
+function checkIfTooLong(num) {
+    let number = num;
+    let numberLength = number.toString().length;
+    if (numberLength > 14) {
+        console.log(number);
+        return number.toPrecision(10);
     } else {
-        return false;
+        console.log(numberLength);
+        return number;
     }
 };
 
@@ -99,7 +105,7 @@ function operate() {
         outcome = divide(first, second);
     };
     clear();
-    firstNumber = outcome;
+    firstNumber = checkIfTooLong(outcome);
     display.textContent = firstNumber;
 }
 
@@ -163,7 +169,7 @@ function assignButton() {
 
 function assignNumber(button) {
     //appending First Number
-    if (operator == '' && display.textContent.length < 15) {
+    if (operator == '' && firstNumber.toString().length < 14) {
         if (button == '.' && firstNumber.includes('.')) {
                 return
             } else {
@@ -171,7 +177,7 @@ function assignNumber(button) {
             display.textContent = firstNumber;
             };
     //appending Second Number
-    } else if (operator != '' && display.textContent.length < 15) {
+    } else if (operator != '' && secondNumber.toString().length < 14) {
         if (button == '.' && secondNumber.includes('.')) {
             return
         } else {
